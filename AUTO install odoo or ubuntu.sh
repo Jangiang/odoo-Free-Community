@@ -7,9 +7,6 @@ wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubun
 sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.24_amd64.deb
 sudo apt update && sudo apt upgrade -y
 
-#Cai dat postgresql
-sudo apt install -y postgresql
-
 #Tao user Cho odoo
 sudo -u postgres createuser -s odoo
 
@@ -71,4 +68,5 @@ sudo -u odoo /opt/odoo/venv/bin/pip install Babel
 sudo systemctl daemon-reexec
 
 sudo systemctl enable --now odoo
+
 
