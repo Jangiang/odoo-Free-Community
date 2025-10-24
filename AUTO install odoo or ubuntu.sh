@@ -1,19 +1,11 @@
 #!/bin/bash
 #update and Cai app can thiet
-sudo apt install -y nano
+sudo apt install -y nano git python3 python3-pip build-essential wget curl python3.12-dev python3-dev python3-venv libxml2-dev libxslt1-dev zlib1g-dev libsasl2-dev libldap2-dev libjpeg-dev libpq-dev libffi-dev libtiff5-dev libopenjp2-7-dev liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpng-dev build-essential libpq-dev postgresql  
 
 sudo apt install -y git python3 python3-pip build-essential wget curl
-sudo apt install python3.12-dev -y
-sudo apt install -y python3-dev python3-venv libxml2-dev libxslt1-dev zlib1g-dev libsasl2-dev
-sudo apt install -y libldap2-dev libjpeg-dev libpq-dev libffi-dev libtiff5-dev libopenjp2-7-dev
-sudo apt install -y liblcms2-dev libfreetype6-dev libwebp-dev libharfbuzz-dev libfribidi-dev
-sudo apt install -y libxcb1-dev libpng-dev
-sudo apt install build-essential -y
-sudo apt install libpq-dev -y
-sudo apt install libssl1.1
-sudo apt update && sudo apt upgrade -y
 wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.24_amd64.deb
 sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.24_amd64.deb
+sudo apt update && sudo apt upgrade -y
 
 #Cai dat postgresql
 sudo apt install -y postgresql
@@ -79,3 +71,4 @@ sudo -u odoo /opt/odoo/venv/bin/pip install Babel
 sudo systemctl daemon-reexec
 
 sudo systemctl enable --now odoo
+
