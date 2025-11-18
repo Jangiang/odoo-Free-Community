@@ -2,6 +2,8 @@
 #update and Cai app can thiet
 sudo dnf install -y python3 python3-pip python3-devel git libxslt-devel bzip2-devel openldap-devel libjpeg-devel freetype-devel postgresql-devel redhat-rpm-config gcc 
 sudo dnf update -y
+sudo dnf config-manager --set-enabled crb -y
+sudo dnf install -y python3.11 python3.11-devel python3.11-pip
 
 sudo dnf install -y postgresql-server postgresql-contrib
 sudo postgresql-setup --initdb
@@ -12,16 +14,17 @@ sudo systemctl enable --now postgresql
 sudo -u postgres createuser -s odoo
 
 #Tao user va foder cho odoo
-sudo adduser --system --home=/opt/odoo --group odoo
+sudo useradd -r -m -d /opt/odoo -s /bin/bash odoo
 
 #Tao Moi Truong Python
 sudo mkdir /opt/odoo
-sudo chown odoo:odoo /opt/odoo
-sudo -u odoo python3 -m venv /opt/odoo/venv
+sudo chown -R odoo:odoo /opt/odoo
+sudo -u odoo python3.11 -m venv /opt/odoo/venv
 
 #Clone odoo 1 phien ban moi nhat
 sudo -u odoo git clone https://www.github.com/odoo/odoo --depth 1 --branch 18.0 /opt/odoo/odoo
 
 #Cai dat python Full
+sudo -u odoo /opt/odoo/venv/bin/pip install --upgrade pip wheel setuptools
 sudo -u odoo /opt/odoo/venv/bin/pip install wheel
 sudo -u odoo /opt/odoo/venv/bin/pip install -r /opt/odoo/odoo/requirements.txt
