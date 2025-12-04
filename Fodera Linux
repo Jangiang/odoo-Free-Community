@@ -16,6 +16,8 @@ sudo dnf -qy module disable postgresql
 sudo dnf install -y postgresql16 postgresql16-server
 sudo /usr/pgsql-16/bin/postgresql-16-setup initdb
 sudo systemctl enable --now postgresql-16
+sudo mkdir -p /opt/odoo/custom-addons
+sudo chown -R odoo:odoo /opt/odoo/custom-addons
 
 #Tao user Cho odoo
 sudo -u postgres createuser -s odoo
