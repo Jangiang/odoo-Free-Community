@@ -1,14 +1,21 @@
 #!/bin/bash
 #update and Cai app can thiet
+
+#almalinux8
+sudo dnf config-manager --set-enabled powertools
+sudo dnf install -y perl-IPC-Run
+
+
+############
 sudo dnf install -y python3 python3-pip python3-devel git libxslt-devel bzip2-devel openldap-devel libjpeg-devel freetype-devel postgresql-devel redhat-rpm-config gcc 
 sudo dnf update -y
 sudo dnf config-manager --set-enabled crb -y
 sudo dnf install -y python3.11 python3.11-devel python3.11-pip
-
-sudo dnf install -y postgresql-server postgresql-contrib
-sudo postgresql-setup --initdb
-sudo systemctl enable --now postgresql
-
+sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+sudo dnf -qy module disable postgresql
+sudo dnf install -y postgresql16 postgresql16-server
+sudo /usr/pgsql-16/bin/postgresql-16-setup initdb
+sudo systemctl enable --now postgresql-16
 
 #Tao user Cho odoo
 sudo -u postgres createuser -s odoo
@@ -22,9 +29,51 @@ sudo chown -R odoo:odoo /opt/odoo
 sudo -u odoo python3.11 -m venv /opt/odoo/venv
 
 #Clone odoo 1 phien ban moi nhat
-sudo -u odoo git clone https://www.github.com/odoo/odoo --depth 1 --branch 18.0 /opt/odoo/odoo
+sudo -u odoo git clone https://www.github.com/odoo/odoo --depth 1 --branch 18.0 /opt/odoo
 
 #Cai dat python Full
 sudo -u odoo /opt/odoo/venv/bin/pip install --upgrade pip wheel setuptools
 sudo -u odoo /opt/odoo/venv/bin/pip install wheel
 sudo -u odoo /opt/odoo/venv/bin/pip install -r /opt/odoo/odoo/requirements.txt
+
+sudo mkdir -p /etc/odoo
+sudo mkdir -p /var/log/odoo
+sudo touch /var/log/odoo/odoo.log
+sudo chown -R odoo:odoo /var/log/odoo
+
+cat > /etc/odoo/odoo.conf <<EOF
+[options]
+admin_passwd = mymasterpassword
+
+db_host = False
+db_port = False
+db_user = odoo
+db_password = False
+
+addons_path = /opt/odoo/odoo/addons,/opt/odoo/custom-addons
+logfile = /var/log/odoo/odoo.log
+xmlrpc_port = 8069
+EOF
+sudo chown odoo:odoo /etc/odoo/odoo.conf
+sudo chmod 640 /etc/odoo/odoo.conf
+
+cat > /etc/systemd/system/odoo.service <<EOF
+[Unit]
+Description=Odoo 18
+After=network.target postgresql-16.service
+
+[Service]
+Type=simple
+User=odoo
+Group=odoo
+ExecStart=/opt/odoo/venv/bin/python3 /opt/odoo/odoo/odoo-bin -c /etc/odoo/odoo.conf
+Restart=always
+WorkingDirectory=/opt/odoo
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+
+
