@@ -18,6 +18,7 @@ sudo /usr/pgsql-16/bin/postgresql-16-setup initdb
 sudo systemctl enable --now postgresql-16
 sudo mkdir -p /opt/odoo/custom-addons
 sudo chown -R odoo:odoo /opt/odoo/custom-addons
+sudo -u odoo /opt/odoo/venv/bin/pip install "paramiko>=3.5.0"
 
 #Tao user Cho odoo
 sudo -u postgres createuser -s odoo
