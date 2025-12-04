@@ -75,5 +75,8 @@ WantedBy=multi-user.target
 EOF
 
 sudo systemctl daemon-reload
+sudo firewall-cmd --permanent --add-port=8069/tcp
+sudo firewall-cmd --reload
+
 
 
