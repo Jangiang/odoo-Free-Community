@@ -19,6 +19,7 @@ sudo systemctl enable --now postgresql-16
 sudo mkdir -p /opt/odoo/custom-addons
 sudo chown -R odoo:odoo /opt/odoo/custom-addons
 sudo -u odoo /opt/odoo/venv/bin/pip install "paramiko>=3.5.0"
+sudo -u odoo /opt/odoo/venv/bin/pip install pandas
 
 #Tao user Cho odoo
 sudo -u postgres createuser -s odoo
