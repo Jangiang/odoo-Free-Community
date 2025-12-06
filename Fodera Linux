@@ -20,6 +20,8 @@ sudo mkdir -p /opt/odoo/custom-addons
 sudo chown -R odoo:odoo /opt/odoo/custom-addons
 sudo -u odoo /opt/odoo/venv/bin/pip install "paramiko>=3.5.0"
 sudo -u odoo /opt/odoo/venv/bin/pip install pandas
+sudo -u odoo /opt/odoo/venv/bin/pip install numpy packaging
+sudo -u odoo /opt/odoo/venv/bin/pip install numpy-financial==1.0.0
 
 #Tao user Cho odoo
 sudo -u postgres createuser -s odoo
