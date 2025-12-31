@@ -14,7 +14,14 @@ sudo -u postgres createuser -s odoo
 #Tao user va foder cho odoo
 sudo adduser --system --home=/opt/odoo --group odoo
 
+#Tao Thư Mục addons_Custom
+sudo mkdir -p /mnt/odoo/addons
+sudo chown -R odoo:odoo /mnt/odoo/addons
+sudo chmod -R 755 /mnt/odoo/addons
+
 #Tao Moi Truong Python
+
+
 sudo mkdir /opt/odoo
 sudo chown odoo:odoo /opt/odoo
 sudo -u odoo python3 -m venv /opt/odoo/venv
@@ -69,6 +76,7 @@ sudo -u odoo /opt/odoo/venv/bin/pip install Babel
 sudo systemctl daemon-reexec
 
 sudo systemctl enable --now odoo
+
 
 
 
